@@ -1,3 +1,6 @@
+import { Text } from "react-native";
+
 export const Bookmarks = () => {
-	return <div>Bookmarked Pokemons</div>;
+	return <Text>Bookmarked Pokemons</Text>;
 };
+

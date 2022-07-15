@@ -1,5 +1,12 @@
-import {useEffect, useState, memo} from 'react';
-import {ActivityIndicator, FlatList, Text, View} from 'react-native';
+import {useEffect, useState, memo, useMemo} from 'react';
+import {
+	ActivityIndicator,
+	FlatList,
+	Text,
+	View,
+	ListRenderItem,
+	ListRenderItemInfo,
+} from 'react-native';
 import tw from 'twrnc';
 import {PokemonCard, PokemonCardProps} from '../components/PokemonCard';
 
@@ -39,19 +46,32 @@ export const Home = memo(() => {
 		setLoading(false);
 	}, [currentPage]);
 
+	const renderItem = useMemo(
+		() =>
+			({item}: ListRenderItemInfo<PokemonCardProps['pokemon']>) => {
+				return <PokemonCard pokemon={item} />;
+			},
+		[]
+	);
+
 	return (
 		<>
-			<View style={tw`flex-1 justify-start items-center bg-slate-800 py-2 px-0.5`}>
+			<View
+				style={tw`flex-1 justify-start items-center py-2 px-0.5`}
+			>
 				<FlatList
 					style={tw`w-full`}
+					maxToRenderPerBatch={20}
+					updateCellsBatchingPeriod={25}
 					onEndReached={() => setCurrentPage(nextPage)}
+					initialNumToRender={10}
 					ListFooterComponent={() => (
 						<ActivityIndicator color='white' size='large' style={tw`my-3`} />
 					)}
-					onEndReachedThreshold={1}
+					onEndReachedThreshold={0.5}
 					numColumns={2}
 					data={[...pokemons.values()]}
-					renderItem={({item}) => <PokemonCard pokemon={item} />}
+					renderItem={renderItem}
 					keyExtractor={(item, index) => item.name + index}
 				/>
 			</View>

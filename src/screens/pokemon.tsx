@@ -1,3 +1,5 @@
+import { Text } from "react-native";
+
 export const Pokemon = () => {
-	return <div>Pokemon Detail</div>;
+	return <Text>Pokemon Detail</Text>;
 };

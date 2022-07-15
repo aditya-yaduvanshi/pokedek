@@ -16,6 +16,9 @@ export const PokemonContext = createContext<IPokemonContext | null>(null);
 
 export const PokemonProvider = React.memo(({children}) => {
   const [pokemons, setPokemons] = useState<IPokemon[]>([]);
+
+  
+
   return (
     <PokemonContext.Provider value={{pokemons, setPokemons}}>
       {children}
