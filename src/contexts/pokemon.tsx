@@ -5,7 +5,7 @@ import React, {
 	useEffect,
 	useContext,
 } from 'react';
-import {getImageUrl} from '../utils/getImageUrl';
+import getImageUrl from '../utils/getImageUrl';
 
 export const PokemonContext = createContext<IPokemonContext | null>(null);
 

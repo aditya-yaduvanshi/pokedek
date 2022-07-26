@@ -1,17 +1,16 @@
 import {useEffect, useState} from 'react';
 
 const useSearchPokemons = (name: string) => {
-	const [pokemon, setPokemon] = useState<any>(null);
+	const [pokemon, setPokemon] = useState<IPokemonDetail>();
 	const [loading, setLoading] = useState(false);
-	const [error, setError] = useState<string | null>(null);
+	const [error, setError] = useState('');
 
 	useEffect(() => {
-		if (!pokemon) return;
+		if (!name) return;
 		setLoading(true);
 		fetch(`https://pokeapi.co/api/v2/pokemon/${name}`)
 			.then((res) => res.json())
 			.then((data) => {
-				console.log(data);
 				setPokemon(data);
 			})
 			.catch((err) => {
@@ -19,7 +18,7 @@ const useSearchPokemons = (name: string) => {
 				setError((err as Error).message)
 			});
 		setLoading(false);
-	}, [pokemon]);
+	}, [name]);
 
 	return {pokemon, loading, error};
 };
